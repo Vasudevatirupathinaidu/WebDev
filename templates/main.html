@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="refresh" content="30">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="A simple website for web developers to showcase their projects and interact with other web developers from all over the world.">
+  <meta name="keywords" content="HTML, CSS, JavaScript, Django, Web Developers, Web Design">
+  <meta name="author" content="Vasudev">
+  <link rel="icon" href="{% static 'images/user.png' %}">
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Poppins:wght@300;400;500;700&display=swap"
+    rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+    integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="{% static 'styles/reset.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/app.css' %}">
+  <title>WebDev</title>
+  <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/becris" title="Becris">Becris</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+</head>
+
+<body>
+  {% include 'navbar.html' %}
+  {% if messages %}
+  {% for message in messages %}
+  {% if message.tags %}
+  <div class="alert-message alert-message-{{message.tags}}">
+    <p>{{message}}</p>
+    <button class="alert-message-close alert-message-{{message.tags}}">x</button>
+  </div>
+  {% endif %}
+  {% endfor %}
+  {% endif %}
+  {% block content %}
+  {% endblock %}
+  {% include 'footer.html' %}
+  <script src="{% static 'scripts/app.js' %}"></script>
+</body>
+
+</html>

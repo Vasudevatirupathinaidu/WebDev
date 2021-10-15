@@ -1,0 +1,29 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+<main id="form">
+    <form action="{% url 'edit-account' %}" method="POST" class="form edit-form" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="edit-header">
+            <h3>Edit an Account</h3>
+        </div>
+
+        <div class="form-fields">
+            {% for field in form %}
+            <div class="form-field">
+                <label for="">{{field.label}}: </label>
+                {{field}}
+
+                {% for error in field.errors %}
+                <p style="color: crimson;">{{error}}</small>
+                    {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+</main>
+
+{% endblock content %}

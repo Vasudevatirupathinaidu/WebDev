@@ -1,0 +1,112 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main id="user-profile">
+
+  <section class="user-profile-card">
+    <div class="edit-delete">
+      <a href="{% url 'edit-account' %}">
+        <p class="edit"><i class="far fa-edit"></i> Edit</p>
+      </a>
+    </div>
+    <img src="{{profile.imageURL}}" alt="">
+    <h2 class="username">{{profile.username}}</h2>
+    <p class="user-short-intro">{{profile.short_intro}}</p>
+    <p class="user-location">{{profile.location}}</p>
+    <div class="user-social-network">
+      {% if profile.social_github %}
+      <p class="social-link social-github">
+        <a href="{{profile.social_github}}" target="_blank"><i class="fab fa-github-alt"></i></a>
+      </p>
+      {% endif %}
+
+      {% if profile.social_twitter %}
+      <p class="social-link social-twitter">
+        <a href="{{profile.social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>
+      </p>
+      {% endif %}
+
+      {% if profile.social_linkedin %}
+      <p class="social-link social-linkedin">
+        <a href="{{profile.social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>
+      </p>
+      {% endif %}
+
+      {% if profile.social_stackoverflow %}
+      <p class="social-link social-stackoverflow">
+        <a href="{{profile.social_stackoverflow}}" target="_blank"><i class="fab fa-stack-overflow"></i></a>
+      </p>
+      {% endif %}
+
+      {% if profile.social_website %}
+      <p class="social-link social-website">
+        <a href="{{profile.social_website}}" target="_blank"><i class="fas fa-globe-asia"></i></a>
+      </p>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="user-profile">
+    <article>
+      <h2 class="about-title">
+        ABOUT ME
+      </h2>
+      <p class="user-bio">
+        {{profile.bio}}
+      </p>
+    </article>
+    <article class="user-skills">
+      <div class="skills-header">
+        <h2 class="skills-title">SKILLS</h2>
+        <a class="add-skill" href="{% url 'create-skill' %}"><span> + </span>Add Skill</a>
+      </div>
+      <div class="skills-list">
+        {% for skill in skills %}
+        <div>
+          <div class="skill-info">
+            <p class="skill-title">{{skill.name}}</p>
+            <p class="skill-description">
+              {{skill.description|slice:"100"}}...
+            </p>
+          </div>
+          <div class="edit-delete">
+            <a href="{% url 'update-skill' skill.id %}" class="edit"><i class="far fa-edit"></i> Edit</a>
+            <a href="{% url 'delete-skill' skill.id %}?next=/account" class="delete"><i class="far fa-trash-alt"></i>
+              Delete</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </article>
+    <hr>
+
+    <article class="user-projects">
+      <div class="projects-header">
+        <h2 class="projects-title">PROJECTS</h2>
+        <a class="add-project" href="{% url 'create-project' %}"><span> + </span>Add project</a>
+      </div>
+      <div class="projects-list">
+        {% for project in projects %}
+        <div>
+          <div class="project-image">
+            <a href="{% url 'project' project.id %}"><img src="{{project.imageURL}}" alt="project-image"></a>
+          </div>
+          <div class="project-info">
+            <p class="project-title">{{project.title}}</p>
+            <p class="project-description">
+              {{project.description|slice:"100"}}...
+            </p>
+          </div>
+          <div class="edit-delete">
+            <a href="{% url 'update-project' project.id %}" class="edit"><i class="far fa-edit"></i> Edit</a>
+            <a href="{% url 'delete-project' project.id %}?next=/account" class="delete"><i
+                class="far fa-trash-alt"></i> Delete</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </article>
+  </section>
+
+</main>
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% if page == 'register' %}
+<main id="form">
+    <form action="{% url 'register' %}" method="POST" class="form register-form">
+        {% csrf_token %}
+
+        <div class="register-header">
+            <h3>Register an Account</h3>
+            <p>Create a new developer account</p>
+        </div>
+
+        <div class="form-fields">
+            {% for field in form %}
+            <div class="form-field">
+                <label for="">{{field.label}}: </label>
+                {{field}}
+
+                {% for error in field.errors %}
+                <p style="color: crimson;">{{error}}</small>
+                    {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+        <input type="submit" value="Sign In">
+        <p>Already have an account?<br><a href="{% url 'login' %}">Login</a></p>
+    </form>
+</main>
+{% else %}
+<main id="form">
+    <form action="" method="POST" class="form">
+        {% csrf_token %}
+
+        <div class="form-fields">
+            <div class="form-field login-form">
+                <div class="login-header">
+                    <h3>Account Login</h3>
+                    <p>Hello Developer, Welcome Back!</p>
+                </div>
+                <!-- Username -->
+                <label for="username">Username: </label>
+                <input class="input" type="text" name="username" placeholder="Enter your name..." id="username">
+
+                <!-- Password -->
+                <label for="">Password: </label>
+                <input class="input" type="password" , name="password" , placeholder="Password">
+
+                <div class="login">
+                    <input type="submit" value="Login">
+                    <p><a href="{% url 'reset_password' %}">Forget Password?</a></p>
+                </div>
+                <p>Don't have an account?<br><a href="{% url 'register' %}">Sign Up</a></p>
+            </div>
+        </div>
+    </form>
+</main>
+{% endif %}
+
+{% endblock content %}

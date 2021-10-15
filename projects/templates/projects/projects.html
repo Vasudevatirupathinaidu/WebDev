@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<main id="projects">
+  <section class="search-box">
+    <p>SEARCH FOR <span>PROJECTS</span></p>
+    <div>
+      <form method="GET" action="{% url 'projects' %}" class="search-form search-query-form">
+        <input type="text" value="{{search_query}}" name="search_query" id="search-project"
+          placeholder="Search by project title">
+        <input class="search-btn" type="submit" value="Search">
+      </form>
+    </div>
+  </section>
+
+  <section class="projects">
+    {% for project in projects %}
+    <div class="project">
+      <div class="project-image">
+        <a href="{% url 'project' project.id %}"><img src="{{project.imageURL}}" alt="project-image"></a>
+      </div>
+
+      <div class="project-info">
+        <h3 class="project-title">
+          {{project.title}}
+        </h3>
+        <p class="project-author">
+          <a href="{% url 'profile' project.owner.id %}">By {{project.owner.username}}</a>
+        </p>
+        <p class="project-feedback"><span>{{project.vote_ratio}}%</span> Positive Feedback ({{project.vote_total}})
+          Vote{{project.vote_total|pluralize:"s"}}</p>
+        <p class="project-tags">
+          {% for tag in project.tags.all %}
+          <span class="tag">
+            {{tag}}
+          </span>
+          {% endfor %}
+        </p>
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+
+  {% include 'pagination.html' with query_set=projects %}
+
+</main>
+{% endblock content %}

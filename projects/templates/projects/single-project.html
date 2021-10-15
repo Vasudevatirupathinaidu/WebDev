@@ -1,0 +1,92 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main id="single-project">
+  <section class="single-project">
+    <img src="{{project.imageURL}}" alt="project-image">
+    <article>
+      <header class="single-project-header">
+        <p class="single-project-author"><a href="{% url 'profile' project.owner.id %}">Vasudev</a></p>
+        <h2 class="single-project-title">
+          {{project.title}}
+        </h2>
+      </header>
+      <div class="single-project-description">
+        <h3 class="description-title">
+          ABOUT THE PROJECT
+        </h3>
+        <p class="description">
+          {{project.description}}
+        </p>
+      </div>
+      <hr>
+      <div class="single-project-feedback">
+        <h3 class="feedback-title">
+          FEEDBACK
+        </h3>
+        <p class="feedback-votes">
+          {{project.vote_ratio}}% Positive Feedback ({{project.vote_total}}) Vote{{project.vote_total|pluralize:"s"}}
+        </p>
+
+        {% if request.user.profile.id in project.reviewers %}
+        <p>You have already submitted your review!</p>
+
+        {% elif request.user.profile == project.owner %}
+        <p>You cannot review your own work</p>
+
+        {% elif request.user.is_authenticated %}
+        <form method="POST" class="feedback-form">
+          {% csrf_token %}
+
+          <div class="form-fields">
+            {% for field in form %}
+            <div class="form-field">
+              <label for="comment">{{field.label}}: </label>
+              {{field}}
+            </div>
+            {% endfor %}
+          </div>
+          <input type="submit" value="Add Review">
+        </form>
+
+        {% else %}
+        <a class="please-login" href="{% url 'login' %}?next={{request.path}}">Please login to leave a review</a>
+        {% endif %}
+
+        <div class="comment-list">
+          {% for review in project.review_set.all %}
+          {% if review.body %}
+          <div class="individual-comment">
+            <a href="{% url 'profile' review.owner.id %}">
+              <img src="{{review.owner.profile_image.url}}" alt="profile image">
+            </a>
+            <div class="user-feedback">
+              <h3 class="name"><a href="{% url 'profile' review.owner.id %}">{{review.owner.name}}</a></h3>
+              <p class="feedback">{{review.body|linebreaksbr}}</p>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+
+      </div>
+    </article>
+  </section>
+  <section class="single-project-tools">
+    <h3>TOOLS & STACKS</h3>
+    <div class="tools">
+      {% for tag in project.tags.all %}
+      <span class="tool">{{tag.name}}</span>
+      {% endfor %}
+    </div>
+    <div class="source-links">
+      {% if project.demo_link %}
+      <span><a href="{{project.demo_link}}" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a></span>
+      {% endif %}
+      {% if project.source_link %}
+      <span><a href="{{project.source_link}}" target="_blank"><i class="fas fa-external-link-alt"></i> Source Link</a></span>
+      {% endif %}
+    </div>
+  </section>
+</main>
+{% endblock content %}

@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+<main id="form">
+  <form action="" method="POST" class="form message-form">
+    {% csrf_token %}
+
+    <div class="back-button"><a href="{% url 'profile' recipient.id %}">&#10094;</a></div>
+
+    <div class="send-message-header">
+      <h3>Send Message</h3>
+    </div>
+
+    <div class="form-fields">
+      {% if request.user.is_authenticated %}
+      <div class="form-field">
+        <label for="">{{form.subject.label}}: </label>
+        {{form.subject}}
+      </div>
+      <div class="form-field">
+        <label for="">{{form.body.label}}: </label>
+        {{form.body}}
+      </div>
+      {% else %}
+      {% for field in form %}
+      <div class="form-field">
+        <label for="">{{field.label}}: </label>
+        {{field}}
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+    <input type="submit" value="Submit">
+  </form>
+</main>
+
+{% endblock content %}

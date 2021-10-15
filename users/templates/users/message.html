@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main id="message">
+  <section>
+    <div class="back-button"><a href="{% url 'inbox' %}">&#10094;</a></div>
+
+    <div class="message-header">
+      <h2 class="message-subject">{{message.subject}}</h2>
+      {% if message.sender %}
+      <p class="message-sender"><a href="{% url 'profile' message.sender.id %}">{{message.name}}</a></p>
+      {% else %}
+      <p class="message-sender">{{message.name}}</p>
+      {% endif %}
+      <p class="time">{{message.created}}</p>
+    </div>
+    <div class="message-body">
+      {{message.body|linebreaksbr}}
+    </div>
+  </section>
+</main>
+{% endblock content %}

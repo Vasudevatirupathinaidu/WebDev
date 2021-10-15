@@ -1,0 +1,21 @@
+<main id="nav">
+  <nav>
+    <h1 class="logo"><a href="{% url 'profiles' %}"><i class="fas fa-rocket"></i></a></h1>
+    <ul class="nav-list nav-list--anim">
+      <li class="nav-list__item"><a href="{% url 'profiles' %}">Developers</a></li>
+      <li class="nav-list__item"><a href="{% url 'projects' %}">Projects</a></li>
+
+      {% if request.user.is_authenticated %}
+      <li class="nav-list__item"><a href="{% url 'inbox' %}">Inbox</a></li>
+      <li class="nav-list__item"><a href="{% url 'account' %}" type="button">My Account</a></li>
+      <li class="nav-list__item nav-list__item--btn"><a href="{% url 'logout' %}" type="button">Logout</a></li>
+      {% else %}
+      <li class="nav-list__item nav-list__item--btn"><a href="{% url 'login' %}" type="button">Login/Sign Up</a></li>
+      {% endif %}
+    </ul>
+    <div class="hamburger-menu">
+      <div class="h-bar1"></div>
+      <div class="h-bar2"></div>
+    </div>
+  </nav>
+</main>

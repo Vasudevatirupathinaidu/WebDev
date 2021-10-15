@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+<main id="form">
+    <form action="" method="POST" class="form">
+        {% csrf_token %}
+
+        <div class="form-fields">
+            <div class="form-field delete-form">
+                <div class="delete-header">
+                    <p>Are you sure you want to delete "{{object}}"?</p>
+                </div>
+                <div class="options">
+                    <a href="{{request.GET.next}}">Go Back</a>
+                    <input type="submit" value="Delete">
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+
+{% endblock content %}

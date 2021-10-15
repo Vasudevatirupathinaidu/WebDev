@@ -1,0 +1,52 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+<main id="profiles">
+  <section class="search-box">
+    <p>CONNECT WITH <span>DEVELOPERS</span> FROM AROUND THE WORLD</p>
+    <div>
+      <form method="GET" action="{% url 'profiles' %}" class="search-form search-query-form">
+        <input type="text" name="search_query" value="{{search_query}}" id="search-profile"
+          placeholder="Search by developer name">
+        <input class="search-btn" type="submit" value="Search">
+      </form>
+    </div>
+  </section>
+
+  <section class="profiles">
+    {% for profile in profiles %}
+    <a class="profile-link" href="{% url 'profile' profile.id %}">
+      <div class="profile">
+        <div class="author-profile">
+          <div class="image">
+            <img src="{{profile.imageURL}}" alt="profile-image">
+          </div>
+          <div class="author-info">
+            <h2 class="author-name">{{profile.username|title}}</h2>
+            <p class="author-intro">{{profile.short_intro}}</p>
+          </div>
+        </div>
+
+        <div class="profile-info">
+          <p class="profile-bio">
+            {{profile.bio|linebreaksbr|slice:"150"}}...
+          </p>
+          <p class="skills">
+            {% for skill in profile.skill_set.all %}
+            <span class="skill">
+              {{skill}}
+            </span>
+            {% endfor %}
+          </p>
+        </div>
+      </div>
+    </a>
+
+    {% endfor %}
+  </section>
+
+  {% include 'pagination.html' with query_set=profiles %}
+
+</main>
+{% endblock content %}

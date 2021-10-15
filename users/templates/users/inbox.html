@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main id="inbox">
+    <h2>NEW MESSAGES(<span>{{unread_messages}}</span>)</h2>
+    <div class="messages">
+        {% for message in messages %}
+        <a href="{% url 'view-message' message.id %}">
+            {% if message.is_read %}
+            <div class="message message-read">
+                {% else %}
+                <div class="message message-unread">
+                    {% endif %}
+                    <p class="sender">{{message.name}}</p>
+                    <p class="subject">{{message.subject}}</p>
+                    <p class="send-time">{{message.created}}</p>
+                </div>
+        </a>
+        {% endfor %}
+    </div>
+</main>
+{% endblock content %}

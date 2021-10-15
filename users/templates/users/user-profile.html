@@ -1,0 +1,110 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main id="user-profile">
+
+  <section class="user-profile-card">
+    <img src="{{profile.imageURL}}" alt="">
+    <h2 class="username">{{profile.username|title}}</h2>
+    <p class="user-short-intro">{{profile.short_intro}}</p>
+    <p class="user-location">{{profile.location}}</p>
+    <div class="user-social-network">
+      {% if profile.social_github %}
+      <p class="social-link social-github">
+        <a href="{{profile.social_github}}" target="_blank"><i class="fab fa-github-alt"></i></a>
+      </p>
+      {% endif %}
+
+      {% if profile.social_twitter %}
+      <p class="social-link social-twitter">
+        <a href="{{profile.social_twitter}}" target="_blank"><i class="fab fa-twitter"></i></a>
+      </p>
+      {% endif %}
+
+      {% if profile.social_linkedin %}
+      <p class="social-link social-linkedin">
+        <a href="{{profile.social_linkedin}}" target="_blank"><i class="fab fa-linkedin"></i></a>
+      </p>
+      {% endif %}
+
+      {% if profile.social_stackoverflow %}
+      <p class="social-link social-stackoverflow">
+        <a href="{{profile.social_stackoverflow}}" target="_blank"><i class="fab fa-stack-overflow"></i></a>
+      </p>
+      {% endif %}
+
+      {% if profile.social_website %}
+      <p class="social-link social-website">
+        <a href="{{profile.social_website}}" target="_blank"><i class="fas fa-globe-asia"></i></a>
+      </p>
+      {% endif %}
+    </div>
+
+    {% if request.user.profile.id != profile.id %}
+    <p class="send-btn"><a href="{% url 'create-message' profile.id %}" type="button">Send
+        Message</a></p>
+    {% endif %}
+  </section>
+
+  <section class="user-profile">
+    <article>
+      <h2 class="about-title">
+        ABOUT ME
+      </h2>
+      <p class="user-bio">
+        {{profile.bio}}
+      </p>
+    </article>
+    <article>
+      <h2 class="skills-title">SKILLS</h2>
+      <div class="skills-list">
+        {% for skill in mainSkills %}
+        <div class="skill-info">
+          <p class="skill-title">{{skill.name}}</p>
+          <p class="skill-description">
+            {{skill.description}}
+          </p>
+        </div>
+        {% endfor %}
+      </div>
+    </article>
+    <article>
+      <h3 class="other-skills-title">OTHER SKILLS</h3>
+      <div class="other-skills">
+        {% for skill in otherSkills %}
+        <span class="other-skill">{{skill.name}}</span>
+        {% endfor %}
+      </div>
+    </article>
+    <hr>
+    <article class="projects">
+      {% for project in profile.project_set.all %}
+      <div class="project">
+        <div class="project-image">
+          <a href="{% url 'project' project.id %}"><img src="{{project.imageURL}}" alt="project-image"></a>
+        </div>
+
+        <div class="project-info">
+          <h3 class="project-title">
+            {{project.title}}
+          </h3>
+          <p class="project-author">
+            <a href="">By {{project.owner.username}}</a>
+          </p>
+          <p class="project-feedback"><span>{{project.vote_ratio}}%</span> Positive Feedback ({{project.vote_total}})
+            Vote{{project.vote_total|pluralize:"s"}}</p>
+          <p class="project-tags">
+            {% for tag in project.tags.all %}
+            <span class="tag">
+              {{tag}}
+            </span>
+            {% endfor %}
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+    </article>
+  </section>
+
+</main>
+{% endblock content %}

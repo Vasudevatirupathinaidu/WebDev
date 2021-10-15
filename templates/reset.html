@@ -1,0 +1,24 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+<main id="form">
+  <form action="" method="POST" class="form reset-form" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="reset-header">
+      <h3>Enter new password
+      </h3>
+      <p>Please enter your new password twice so we can verify you typed it in correctly.
+      </p>
+    </div>
+
+    <div class="form-fields">
+      <div class="form-field">
+        {{form}}
+      </div>
+    </div>
+    <input type="submit" value="Submit">
+  </form>
+</main>
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main id="form">
+    <form method="POST" class="form project-form" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="back-button"><a href="{% url 'account' %}">&#10094;</a></div>
+        <div class="form-fields">
+            <div class="project-header">
+                <h3>Add Project</h3>
+            </div>
+            {% for field in form %}
+            <div class="form-field">
+                <label for="">{{field.label}}: </label>
+                {{field}}
+            </div>
+            {% endfor %}
+
+            <div class="form-field">
+                <div class="skills">
+                    {% for tag in project.tags.all %}
+                        <div class="project-tag skill" data-tag="{{tag.id}}" data-project="{{project.id}}">{{tag.name}} <span style="cursor: pointer; font-size: 1.6em; vertical-align: middle;">&#215;</span></div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label for="newtags">Tags:</label>
+                <textarea class="input" name="newtags" id="newtags" placeholder="Add tags here..."></textarea>
+            </div>
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+</main>
+
+{% endblock content %}
