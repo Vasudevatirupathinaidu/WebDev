@@ -8,7 +8,7 @@ A full-stack web app where developers from all over the world can create a profi
 - 2 - create a virtual environment and activate
 - - python -m venv env
 - - env\Scripts\activate
-- 3 - cd into project "cd webdev"
+- 3 - cd into project "cd WebDev"
 - 4 - pip install -r requirements.txt
 - 5 - python manage.py runserver
 
